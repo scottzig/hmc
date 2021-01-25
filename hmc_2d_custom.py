@@ -55,7 +55,8 @@ def hmc(target,grad,length,ep,L):
     return theta, acc   
         
 #run the HMC algorithm on the density defined above and plot
-sample_size=10000
+plt.figure()
+sample_size=100
 e=0.1 # must be set smaller in this example, likely due to derivative
 L_1=10
 samples, numacc = hmc(dist,grad_U,sample_size,e,L_1)
@@ -63,28 +64,49 @@ accrate=numacc/sample_size
 ar = str(accrate)
 ar = ar[:5]
 plt.scatter(samples[:,0],samples[:,1])
-plt.title('HMC ' +ar)
-plt.xlabel('x_1')
-plt.ylabel('x_2')
+plt.title('HMC 100 points')
+#plt.xlabel('x_1')
+#plt.ylabel('x_2')
 #print('Acceptance Rate:',accrate)
+# plt.figure()
+# sample_size=1000
+# e=0.1 # must be set smaller in this example, likely due to derivative
+# L_1=10
+# samples, numacc = hmc(dist,grad_U,sample_size,e,L_1)
+# accrate=numacc/sample_size
+# ar = str(accrate)
+# ar = ar[:5]
+# plt.scatter(samples[:,0],samples[:,1])
+# plt.title('HMC 1,000 points')
+
+# plt.figure()
+# sample_size=10000
+# e=0.1 # must be set smaller in this example, likely due to derivative
+# L_1=10
+# samples, numacc = hmc(dist,grad_U,sample_size,e,L_1)
+# accrate=numacc/sample_size
+# ar = str(accrate)
+# ar = ar[:5]
+# plt.scatter(samples[:,0],samples[:,1])
+# plt.title('HMC 10,000 points, acceptance rate: ' +ar)
 
 # animate the above chain
-fig, ax = plt.subplots()
-CS = ax.contour(X, Y, Z)
-plt.xlim(-6, 3)
-plt.ylim(-4, 4)
-ax.set_title('HMC ' +ar)
-plt.xlabel('x_1')
-plt.ylabel('x_2')
-graph, = plt.plot([], [], 'o', markersize=4, alpha=1.4)
-samples_x = samples[:,0]
-samples_y = samples[:,1]
-#alpha make points more opaque ggplot
+# fig, ax = plt.subplots()
+# CS = ax.contour(X, Y, Z)
+# plt.xlim(-6, 3)
+# plt.ylim(-4, 4)
+# ax.set_title('HMC ' +ar)
+# plt.xlabel('x_1')
+# plt.ylabel('x_2')
+# graph, = plt.plot([], [], 'o', markersize=4, alpha=1.4)
+# samples_x = samples[:,0]
+# samples_y = samples[:,1]
+# #alpha make points more opaque ggplot
 
-def animate(i):
-    graph.set_data(samples_x[:i+1], samples_y[:i+1])
-    return graph
+# def animate(i):
+#     graph.set_data(samples_x[:i+1], samples_y[:i+1])
+#     return graph
 
-ani = FuncAnimation(fig, animate, frames=sample_size, interval=10)
-plt.show()
+# ani = FuncAnimation(fig, animate, frames=sample_size, interval=10)
+# plt.show()
 #ani.save('../../files/hmc_g.gif', writer='imagemagick', fps=60)

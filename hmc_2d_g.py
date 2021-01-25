@@ -25,8 +25,8 @@ x = np.arange(-4.0,4.0,0.2)
 y = np.arange(-4.0,4.0,0.2)
 X,Y = np.meshgrid(x, y) # grid of points
 Z = gauss(X, Y) # evaluation of the function on the grid
-#fig, ax = plt.subplots()
-#CS = ax.contour(X, Y, Z)
+fig, ax = plt.subplots()
+CS = ax.contour(X, Y, Z)
 #ax.set_title('Target Distribution')
 
 # define the Hamiltonian MC algorithm
@@ -52,32 +52,32 @@ def hmc(target,grad,length,ep,L):
     return theta, acc   
         
 #run the HMC algorithm on the density defined above and plot
-sample_size=6000
+sample_size=20
 e=0.5
 L_1=10
 samples, numacc = hmc(gauss,grad_U,sample_size,e,L_1)
 accrate=numacc/sample_size
 ar = str(accrate)
 ar = ar[:5]
-#plt.scatter(samples[:,0],samples[:,1])
-#print('Acceptance Rate:',accrate)
+plt.scatter(samples[:,0],samples[:,1])
+print('Acceptance Rate:',accrate)
 
 # animate the above chain
-fig, ax = plt.subplots()
-CS = ax.contour(X, Y, Z)
-plt.xlim(-4, 4)
-plt.ylim(-4, 4)
-ax.set_title('HMC ' +ar)
-plt.xlabel('x_1')
-plt.ylabel('x_2')
-graph, = plt.plot([], [], 'o', markersize=4, alpha=1.4)
-samples_x = samples[:,0]
-samples_y = samples[:,1]
+# fig, ax = plt.subplots()
+# CS = ax.contour(X, Y, Z)
+# plt.xlim(-4, 4)
+# plt.ylim(-4, 4)
+# ax.set_title('HMC ' +ar)
+# plt.xlabel('x_1')
+# plt.ylabel('x_2')
+# graph, = plt.plot([], [], 'o', markersize=4, alpha=1.4)
+# samples_x = samples[:,0]
+# samples_y = samples[:,1]
 
-def animate(i):
-    graph.set_data(samples_x[:i+1], samples_y[:i+1])
-    return graph
+# def animate(i):
+#     graph.set_data(samples_x[:i+1], samples_y[:i+1])
+#     return graph
 
-ani = FuncAnimation(fig, animate, frames=sample_size, interval=10)
-plt.show()
-#ani.save('../../files/hmc_g.gif', writer='imagemagick', fps=60)
+# ani = FuncAnimation(fig, animate, frames=sample_size, interval=10)
+# plt.show()
+# #ani.save('../../files/hmc_g.gif', writer='imagemagick', fps=60)
